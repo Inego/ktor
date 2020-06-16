@@ -54,6 +54,8 @@ kotlin.sourceSets {
     jvmMain {
         dependencies {
             api(project(":ktor-server:ktor-server-cio"))
+            api(project(":ktor-server:ktor-server-netty"))
+            api(project(":ktor-server:ktor-server-jetty"))
             api(project(":ktor-features:ktor-auth"))
             api(project(":ktor-features:ktor-websockets"))
             api("ch.qos.logback:logback-classic:$logback_version")
