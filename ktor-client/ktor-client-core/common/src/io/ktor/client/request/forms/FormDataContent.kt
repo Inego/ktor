@@ -86,12 +86,20 @@ class MultiPartFormDataContent(
     override val contentType: ContentType = ContentType.MultiPart.FormData.withParameter("boundary", boundary)
 
     init {
-        var rawLength = rawParts.fold<PreparedPart, Long>(0L) { current, part ->
-            val size = part.size ?: 0
-            current + size
+        var rawLength:Long? = 0
+        for (part in rawParts) {
+            val size = part.size
+            if (size == null) {
+                rawLength =null
+                break
+            }
+
+            rawLength = rawLength?.plus(size)
         }
 
-        rawLength += BODY_OVERHEAD_SIZE
+        if (rawLength != null) {
+            rawLength += BODY_OVERHEAD_SIZE
+        }
 
         contentLength = rawLength
     }
